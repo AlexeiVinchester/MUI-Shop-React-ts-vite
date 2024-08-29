@@ -1,8 +1,7 @@
+import { IGood } from "../../../data/goods/goots";
 import { AddOrder } from "../../../interfaces/AddOrder";
 
-export interface GoodsItemProps {
-    id: string;
-    name: string;
-    price: number;
+export interface GoodsListProps {
+    goods: IGood[];
     addToOrder: (orderGood: AddOrder) => void;
 }

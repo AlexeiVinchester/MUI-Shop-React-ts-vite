@@ -1,4 +1,4 @@
 export interface SearchContainerProps {
-    onChange: () => void;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     value: string;
 }
