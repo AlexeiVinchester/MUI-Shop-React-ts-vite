@@ -1,34 +1,47 @@
+import Grid from '@mui/material/Grid2';
 import { GoodsItemProps } from "./interface/GoodsItem.interface";
-
-const GoodsItem = ({name, price, id, addToOrder}: GoodsItemProps) => {
+import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@mui/material';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+const GoodsItem = ({ name, price, id, poster, addToOrder }: GoodsItemProps) => {
 
     const clickHandler = () => {
-        addToOrder({name, price, id});
+        addToOrder({ name, price, id });
     };
 
     return (
-        <div className='col-12 col-md-6 px-md-2'>
-            <div className='card'>
-                <img
-                    src={`https://via.placeholder.com/300x150.png?text=${name.slice(
-                        0,
-                        12
-                    )}`}
-                    className='card-img-top'
-                    alt={name}
+        <Grid size={{ xs: 12, md: 4 }}>
+            <Card sx={{height: '100%'}}>
+                <CardMedia
+                    sx={{ height: 140 }}
+                    image={poster}
+                    title={name}
                 />
-                <div className='card-body'>
-                    <h5 className='card-title'>{name}</h5>
-                    <p className='card-text'>Цена: {price} руб.</p>
-                    <button
-                        className='btn btn-primary'
+                <CardContent>
+                    <Typography 
+                        component="p"
+                        variant='h6'
+                    >
+                        {name}
+                    </Typography>
+                    <Typography 
+                        variant='body1'
+                    
+                    >
+                        Price: {price} RUB.
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button
+                        variant='outlined'
+                        endIcon={<ShoppingCartOutlinedIcon />}
                         onClick={clickHandler}
                     >
-                        Купить
-                    </button>
-                </div>
-            </div>
-        </div>
+                        Buy
+                    </Button>
+                </CardActions>
+
+            </Card>
+        </Grid>
     );
 };
 

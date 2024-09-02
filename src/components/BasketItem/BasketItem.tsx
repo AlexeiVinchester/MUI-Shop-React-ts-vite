@@ -1,21 +1,24 @@
+import { IconButton, ListItem, Typography } from "@mui/material";
 import { BasketItemProps } from "./interface/BasketItem.interface";
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+const BasketItem = ({ id, name, price, quantity, deleteOrder }: BasketItemProps) => {
 
-const BasketItem = ({id, name, price, quantity, deleteOrder}: BasketItemProps) => {
-    
     const clickHandler = () => {
         deleteOrder(id);
     };
-   
+
     return (
-        <li className='list-group-item'>
-            {name} {price}руб x{quantity}
-            <button
+        <ListItem>
+            <Typography variant="body1">
+                {name} {price}руб x{quantity}
+            </Typography>
+            <IconButton
                 className='btn btn-primary'
                 onClick={clickHandler}
             >
-                Удалить из корзины
-            </button>
-        </li>
+                <DeleteForeverIcon />
+            </IconButton>
+        </ListItem>
     );
 };
 

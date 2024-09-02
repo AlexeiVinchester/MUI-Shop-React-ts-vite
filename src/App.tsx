@@ -4,13 +4,18 @@ import { SearchContainer } from "./components/SearchContainer/SearchContainer";
 import { GoodsList } from "./components/GoodsList/GoodsList";
 import { IOrderGood } from "./interfaces/IOrderGood";
 import { AddOrder } from "./interfaces/AddOrder";
-import { BasketList } from "./components/BasketList/BasketList";
+import { Header } from "./components/Header/Header";
+import { Container } from "@mui/material";
+import { BasketDrawer } from "./components/BasketDrawer/BasketDrawer";
+import { SnackBarContainer } from "./components/SnackBarContainer/SnackBarContainer";
 
 function App() {
 
     const [order, setOrder] = useState<IOrderGood[]>([]);
     const [search, setSearch] = useState('');
     const [products, setProducts] = useState<IGood[]>(goods);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+    const [isSnackOpen, setIsSnackOpen] = useState(false)
 
     const changeSearchHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (!event.target.value) {
@@ -31,15 +36,15 @@ function App() {
     const addToOrder = ({ id, name, price }: AddOrder): void => {
         let quantity = 1;
 
-        const sameIndexInOrder = order.findIndex((good) => 
+        const sameIndexInOrder = order.findIndex((good) =>
             good.id === id
         );
 
-        if(sameIndexInOrder > -1) {
+        if (sameIndexInOrder > -1) {
             quantity = order[sameIndexInOrder].quantity + 1;
             setOrder(
                 order.map((orderItem) => {
-                    if(orderItem.id !== id) return orderItem;
+                    if (orderItem.id !== id) return orderItem;
 
                     return {
                         id, name, price, quantity
@@ -48,10 +53,11 @@ function App() {
             );
         } else {
             setOrder((order) => [
-                ...order, 
+                ...order,
                 { id, name, price, quantity }
             ]);
         }
+        setIsSnackOpen(true);
     };
 
     const deleteGoodFromOrder = (id: string) => {
@@ -60,24 +66,44 @@ function App() {
         );
     };
 
+    const cartClose = () => {
+        setIsCartOpen(false);
+    };
+
+    const cartOpen = () => {
+        setIsCartOpen(true)
+    };
+
+    const snackClose = () => {
+        setIsSnackOpen(false);
+    };
+
     return (
         <>
-            <div className='App'>
-                <div className='container'>
-                    <SearchContainer
-                        value={search}
-                        onChange={changeSearchHandler}
-                    />
-                    <GoodsList
-                        goods={products}
-                        addToOrder={addToOrder}
-                    />
-                    <BasketList 
-                        order={order}
-                        deleteOrder={deleteGoodFromOrder}
-                    />
-                </div>
-            </div>
+            <Header 
+                onClickBasket={cartOpen}
+                orderLength={order.length}
+            />
+            <Container sx={{mt: '1rem'}}>
+                <SearchContainer
+                    value={search}
+                    onChange={changeSearchHandler}
+                />
+                <GoodsList
+                    goods={products}
+                    addToOrder={addToOrder}
+                />
+            </Container>
+            <BasketDrawer 
+                deleteOrder={deleteGoodFromOrder}
+                order={order}
+                cartOpen={isCartOpen}
+                cartClose={cartClose}
+            />
+            <SnackBarContainer 
+                isOpen={isSnackOpen}
+                onClose={snackClose}
+            />
         </>
     );
 };
