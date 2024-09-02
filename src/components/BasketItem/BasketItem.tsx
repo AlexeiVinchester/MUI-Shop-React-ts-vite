@@ -8,7 +8,7 @@ const BasketItem = ({ id, name, price, quantity, deleteOrder }: BasketItemProps)
     };
 
     return (
-        <ListItem>
+        <ListItem sx={{display: 'flex', justifyContent: 'space-between'}}>
             <Typography variant="body1">
                 {name} {price}руб x{quantity}
             </Typography>

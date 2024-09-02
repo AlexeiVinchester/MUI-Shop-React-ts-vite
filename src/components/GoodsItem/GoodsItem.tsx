@@ -10,22 +10,29 @@ const GoodsItem = ({ name, price, id, poster, addToOrder }: GoodsItemProps) => {
 
     return (
         <Grid size={{ xs: 12, md: 4 }}>
-            <Card sx={{height: '100%'}}>
+            <Card
+                sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'space-between'
+                }}
+            >
                 <CardMedia
                     sx={{ height: 140 }}
                     image={poster}
                     title={name}
                 />
                 <CardContent>
-                    <Typography 
+                    <Typography
                         component="p"
                         variant='h6'
                     >
                         {name}
                     </Typography>
-                    <Typography 
+                    <Typography
                         variant='body1'
-                    
+
                     >
                         Price: {price} RUB.
                     </Typography>
